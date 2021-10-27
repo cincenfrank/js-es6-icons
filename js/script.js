@@ -123,7 +123,7 @@ const cardsContainer = document.getElementById("cards_container");
 const categorySelect = document.getElementById("category_select");
 const dataObj = generateDataStructure(iconsArray);
 populateIconsGrid(dataObj, ...Object.keys(dataObj));
-populateSelectOptions(dataObj);
+// populateSelectOptions(dataObj);
 
 categorySelect.addEventListener("change", function () {
   if (this.value === "all") {
@@ -133,17 +133,24 @@ categorySelect.addEventListener("change", function () {
   }
 });
 
+// /**
+//  *
+//  * @param {{key:[{name:string,prefix:string,type:string,family:string}]}} iconsDataObject
+//  */
+// function populateSelectOptions(iconsDataObject) {
+//   let selectHtmlText = `<option selected value="all">All</option>`;
+//   for (const key in iconsDataObject) {
+//     selectHtmlText += `<option value="${key.toLowerCase()}">${
+//       key[0].toUpperCase() + key.slice(1)
+//     }</option>`;
+//   }
+//   categorySelect.innerHTML = selectHtmlText;}
+
 /**
  *
  * @param {{key:[{name:string,prefix:string,type:string,family:string}]}} iconsDataObject
  */
-function populateSelectOptions(iconsDataObject) {
-  let selectHtmlText = `<option selected value="all">All</option>`;
-  for (const key in iconsDataObject) {
-    selectHtmlText += `<option value="${key.toLowerCase()}">${
-      key[0].toUpperCase() + key.slice(1)
-    }</option>`;
-  }
+function populateSelectOptions(selectHtmlText) {
   categorySelect.innerHTML = selectHtmlText;
 }
 
@@ -187,10 +194,14 @@ function generateDataStructure(arrayOfIcons) {
   const newObject = {};
 
   //   const uniqueColorsArray = [];
-
+  let selectHtmlText = `<option selected value="all">All</option>`;
   arrayOfIcons.map(({ name, prefix, type, family }) => {
     if (!newObject.hasOwnProperty(type)) {
       newObject[type] = [];
+      selectHtmlText += `<option value="${type.toLowerCase()}">${
+        type[0].toUpperCase() + type.slice(1)
+      }</option>`;
+
       if (!colorsObject.hasOwnProperty(type)) {
         colorsObject[type] = generateUniqueRandomColor(colorsObject);
       }
@@ -203,6 +214,7 @@ function generateDataStructure(arrayOfIcons) {
       color: colorsObject[type],
     });
   });
+  populateSelectOptions(selectHtmlText);
   return newObject;
 }
 
