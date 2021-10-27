@@ -150,6 +150,7 @@ function populateSelectOptions(iconsDataObject) {
 /**
  *
  * @param {{key:[{name:string,prefix:string,type:string,family:string}]}} iconsDataObject
+ * @param  {...string} categories
  */
 function populateIconsGrid(iconsDataObject, ...categories) {
   let innerHtmlText = "";
